@@ -1,75 +1,42 @@
-# Nuxt Minimal Starter
+# ⚡ Interactive Nuxt 3 Pokédex
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+A vibrant, kid-friendly Pokédex built with **Nuxt 3**, **TypeScript**, and the **PokéAPI**. This project features a dynamic search system, type-based color palettes, and high-quality official artwork with custom watermarks.
 
-## Setup
+## ✨ Features
 
-Make sure to install dependencies:
+* **Smart Search:** Filter Pokémon instantly by name or elemental type.
+* **Dynamic Styling:** The UI automatically adapts its color scheme and icons (🔥, 💧, 🌿, etc.) based on the Pokémon's primary type.
+* **Official Artwork:** High-resolution images fetched directly from the PokéAPI.
+* **Responsive Design:** Fully optimized for mobile, tablet, and desktop viewing.
+* **Custom Watermarks:** Sleek background illustrations that give each card a premium feel.
 
-```bash
-# npm
-npm install
+## 🛠️ Tech Stack
 
-# pnpm
-pnpm install
+* **Framework:** [Nuxt 3](https://nuxt.com/)
+* **Language:** TypeScript
+* **Styling:** Scoped CSS with CSS Variables for dynamic coloring
+* **API:** [PokéAPI](https://pokeapi.co/)
 
-# yarn
-yarn install
+## 🚀 Local Development
 
-# bun
-bun install
-```
+Ensure you have [Node.js](https://nodejs.org/) installed (version 18.x or higher).
 
-## Development Server
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/geethikakodali99-afk/pokemon-pokedex-nuxt.git](https://github.com/geethikakodali99-afk/pokemon-pokedex-nuxt.git)
+    cd pokemon-pokedex-nuxt
+    ```
 
-Start the development server on `http://localhost:3000`:
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
 
-```bash
-# npm
-npm run dev
+3.  **Start the development server:**
+    ```bash
+    npm run dev
+    ```
 
-# pnpm
-pnpm dev
+4.  **Open the app:**
+    Navigate to `http://localhost:3000` in your browser.
 
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
