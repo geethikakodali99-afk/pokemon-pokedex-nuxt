@@ -19,12 +19,18 @@
         class="card"
         :class="poke.type"
       >
-        <div class="type-pill">{{ poke.type }}</div>
+        <img :src="poke.thumbnail" class="watermark-bg" alt="" />
+
+        <div class="type-pill">
+          <span class="type-icon">{{ typeIcons[poke.type] || '🐾' }}</span>
+          {{ poke.type }}
+        </div>
+
         <div class="image-container">
           <img :src="poke.thumbnail" :alt="poke.name" />
         </div>
         <p class="poke-name">{{ poke.name.toUpperCase() }}</p>
-        <p class="poke-id">#{{ poke.id.padStart(3, '0') }}</p>
+        <p class="poke-id">#{{ poke.id.toString().padStart(3, '0') }}</p>
       </NuxtLink>
     </div>
   </div>
@@ -32,9 +38,28 @@
 
 <script setup lang="ts">
 const searchQuery = ref('');
-
-// Fetching enhanced data from your internal API
 const { data: pokemon } = await useFetch('/api/pokemon');
+
+// Icon mapping for kid-friendly UI
+const typeIcons: Record<string, string> = {
+  fire: '🔥',
+  water: '💧',
+  grass: '🌿',
+  electric: '⚡',
+  bug: '🐞',
+  poison: '🧪',
+  normal: '⭐',
+  fighting: '🥊',
+  ground: '⛰️',
+  fairy: '✨',
+  psychic: '🔮',
+  rock: '🪨',
+  ghost: '👻',
+  ice: '❄️',
+  dragon: '🐲',
+  flying: '🕊️',
+  steel: '⚙️'
+};
 
 const filteredPokemon = computed(() => {
   if (!pokemon.value) return [];
@@ -46,80 +71,66 @@ const filteredPokemon = computed(() => {
 </script>
 
 <style scoped>
-.container { max-width: 1100px; margin: 0 auto; padding: 20px; font-family: 'Inter', sans-serif; }
-
-/* Sticky Header Logic */
+.container { 
+  max-width: 1100px; margin: 0 auto; padding: 20px; 
+  font-family: 'Inter', sans-serif; background-color: #FDFCF0; min-height: 100vh;
+}
 .header {
-  position: sticky;
-  top: 0;
-  background-color: white;
-  z-index: 100;
-  padding: 10px 0 20px 0;
-  border-bottom: 1px solid #eee;
-  margin-bottom: 30px;
+  position: sticky; top: 0; background-color: #FDFCF0;
+  z-index: 100; padding: 10px 0 20px 0; margin-bottom: 30px;
 }
-
-h1 { text-align: center; color: #333; margin-bottom: 20px; }
-
+h1 { text-align: center; color: #CC3333; font-size: 3rem; margin-bottom: 15px; }
 .search-bar input { 
-  width: 100%; 
-  padding: 15px; 
-  border: 2px solid #eee; 
-  border-radius: 12px; 
-  font-size: 16px; 
-  outline: none;
-  transition: border-color 0.3s;
+  width: 100%; padding: 15px; border: 3px solid #eee; 
+  border-radius: 25px; font-size: 16px; outline: none;
 }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 25px; }
 
-.search-bar input:focus { border-color: #ef5350; }
-
-.grid { 
-  display: grid; 
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); 
-  gap: 25px; 
-}
-
-/* Card Styling with Type-Based Colors */
 .card { 
-  border: 1px solid #eee; 
-  padding: 20px; 
-  border-radius: 20px; 
-  text-align: center; 
-  text-decoration: none; 
-  color: #333; 
-  transition: all 0.3s ease; 
-  position: relative;
-  overflow: hidden;
+  border: none; padding: 20px; border-radius: 30px; text-align: center; 
+  text-decoration: none; color: #333; transition: all 0.3s ease; 
+  position: relative; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  display: flex; flex-direction: column; align-items: center;
 }
 
-.card:hover { transform: translateY(-8px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+.watermark-bg {
+  position: absolute; width: 140%; height: auto; top: 50%; left: 50%;
+  transform: translate(-50%, -50%); opacity: 0.07; pointer-events: none; z-index: 0;
+}
 
+.card:hover { transform: translateY(-8px); box-shadow: 0 12px 20px rgba(0,0,0,0.1); }
+
+/* UPDATED PILL STYLE */
 .type-pill {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 10px;
-  font-weight: bold;
-  text-transform: uppercase;
-  background: rgba(255, 255, 255, 0.7);
-  padding: 4px 10px;
-  border-radius: 20px;
+  position: absolute; top: 12px; right: 12px; font-size: 10px; font-weight: bold;
+  text-transform: uppercase; background: rgba(255, 255, 255, 0.9);
+  padding: 6px 14px; border-radius: 20px; z-index: 2;
+  display: flex; align-items: center; gap: 4px;
 }
+.type-icon { font-size: 12px; }
 
-.image-container img { width: 120px; height: 120px; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.1)); }
+.image-container { z-index: 1; }
+.image-container img { width: 120px; height: 120px; filter: drop-shadow(2px 6px 8px rgba(0,0,0,0.1)); }
 
-.poke-name { font-weight: 800; margin-top: 15px; margin-bottom: 5px; letter-spacing: 1px; }
+.poke-name { font-weight: 800; margin-top: 15px; margin-bottom: 5px; z-index: 1; }
+.poke-id { font-size: 12px; color: #777; font-weight: bold; z-index: 1; }
 
-.poke-id { font-size: 12px; color: #777; margin: 0; }
-
-/* Dynamic Background Colors based on Type */
-.fire { background-color: #ffebec; border-color: #ffcdd2; }
-.water { background-color: #e3f2fd; border-color: #bbdefb; }
-.grass { background-color: #f1f8e9; border-color: #dcedc8; }
-.electric { background-color: #fffde7; border-color: #fff9c4; }
-.bug { background-color: #f5f5f5; border-color: #e0e0e0; }
-.poison { background-color: #f3e5f5; border-color: #e1bee7; }
-.normal { background-color: #fafafa; border-color: #f5f5f5; }
-.ground { background-color: #fff3e0; border-color: #ffe0b2; }
-.fairy { background-color: #fce4ec; border-color: #f8bbd0; }
+/* PALETTE */
+.normal { background-color: #F5F5F5; border: 2px solid #E0E0E0; }
+.fighting { background-color: #FFF3E0; border: 2px solid #FFE0B2; }
+.fire { background-color: #FFEBEC; border: 2px solid #FFCDD2; }
+.water { background-color: #E3F2FD; border: 2px solid #BBDEFB; }
+.grass { background-color: #F1F8E9; border: 2px solid #DCEDC8; }
+.electric { background-color: #FFFDE7; border: 2px solid #FFF9C4; }
+.bug { background-color: #F0F4C3; border: 2px solid #DCE775; }
+.poison { background-color: #F3E5F5; border: 2px solid #E1BEE7; }
+.ground { background-color: #EFEBE9; border: 2px solid #D7CCC8; }
+.fairy { background-color: #FCE4EC; border: 2px solid #F8BBD0; }
+.psychic { background-color: #FFF1F1; border: 2px solid #FBC2C2; }
+.rock { background-color: #D7CCC8; border: 2px solid #BCAAA4; }
+.ghost { background-color: #EDE7F6; border: 2px solid #D1C4E9; }
+.ice { background-color: #E0F7FA; border: 2px solid #B2EBF2; }
+.dragon { background-color: #E8EAF6; border: 2px solid #C5CAE9; }
+.flying { background-color: #E1F5FE; border: 2px solid #B3E5FC; }
+.steel { background-color: #ECEFF1; border: 2px solid #CFD8DC; }
 </style>
